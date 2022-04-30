@@ -81,7 +81,7 @@ def scrap_page(url):
 
                 t_s = str(data).find("Website:</strong>")
                 s = str(data).find("href=", t_s)
-                e = str(data).find(' " ', s+2)
+                e = str(data).find('</a>', s+2)
                 k['Website'] = str(
                     data)[s+len("href= "):e]
 
