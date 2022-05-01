@@ -63,6 +63,12 @@ def scrap_page(url):
                 k['Province'] = str(
                     data)[s+len("title= "):e]
 
+                t_s = str(data).find("State:</strong>")
+                s = str(data).find("title=", t_s)
+                e = str(data).find("</a>", s+1)
+                k['State'] = str(
+                    data)[s+len("title= "):e]
+
                 t_s = str(data).find("Country:</strong>")
                 s = str(data).find("title=", t_s)
                 e = str(data).find("</a>", s+1)
@@ -78,12 +84,6 @@ def scrap_page(url):
                 e = str(data).find("</div>", s+1)
                 k['Full Location'] = str(
                     data)[s+len("Full Location:</strong>"):e]
-
-                t_s = str(data).find("Website:</strong>")
-                s = str(data).find("href=", t_s)
-                e = str(data).find('</a>', s+2)
-                k['Website'] = str(
-                    data)[s+len("href= "):e]
 
                 s = str(data).find("Latitude:</strong>")
                 e = str(data).find("</div>", s+1)
