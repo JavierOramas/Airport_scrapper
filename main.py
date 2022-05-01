@@ -80,6 +80,16 @@ def scrap_page(url):
                 k['Continent'] = str(
                     data)[s+len("Continent:</strong>"):e]
 
+                s = str(data).find("Region:</strong>")
+                e = str(data).find("</div>", s+1)
+                k['Region'] = str(
+                    data)[s+len("Region:</strong>"):e]
+
+                s = str(data).find("Canton:</strong>")
+                e = str(data).find("</div>", s+1)
+                k['Canton'] = str(
+                    data)[s+len("Canton:</strong>"):e]
+
                 s = str(data).find("Full Location:</strong>")
                 e = str(data).find("</div>", s+1)
                 k['Full Location'] = str(
