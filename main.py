@@ -7,6 +7,7 @@ import json
 def scrap_page(url):
     soup = BeautifulSoup(requests.get(url).text, features="html.parser")
     countries = []
+    final = []
     for i in soup.find_all("ul", {"class": 'airport-list'}):
         countries.append(
             [{"url": j.get("href"), "country": j.get("title"), "airports": []} for j in i.find_all("a")])
@@ -19,12 +20,12 @@ def scrap_page(url):
                                  features="html.parser")
             for k in soup.find_all("ul", {"class": 'airport-list'}):
                 for l in k.find_all("a"):
-                    j['airports'].append({"url": "https://www.air-port-codes.com" +
-                                          l.get('href'),
-                                          "name": l.get('title'),
-                                          "keywords": '',
-                                          "IATA Code": '',
-                                          "City": '',
+                    final.append({"url": "https://www.air-port-codes.com" +
+                                  l.get('href'),
+                                  "name": l.get('title'),
+                                  "keywords": '',
+                                  "IATA Code": '',
+                                  "City": '',
                                           "Province": '',
                                           "Country": '',
                                           "Continent": '',
@@ -33,9 +34,9 @@ def scrap_page(url):
                                           "Latitude": '',
                                           "Longitude": '',
                                           "Elevation": ''
-                                          })
+                                  })
 
-            for k in j['airports']:
+            for k in final:
                 soup = BeautifulSoup(requests.get(
                     k['url']).text, features="html.parser")
 
@@ -246,7 +247,7 @@ def scrap_page(url):
                     data)[s+len("Elevation:</strong>"):e]
 
     with open('airports.json', "w") as file:
-        json.dump(countries, file)
+        json.dump(final, file)
 
 
 scrap_page("https://www.air-port-codes.com/airport-list/countries/")
