@@ -19,23 +19,19 @@ def scrap_page(url):
                                  features="html.parser")
             for k in soup.find_all("ul", {"class": 'airport-list'}):
                 for l in k.find_all("a"):
+                    # print(l.get("title"))
                     j['airports'].append({"url": "https://www.air-port-codes.com" +
                                           l.get('href'),
                                           "name": l.get('title'),
                                           "keywords": '',
                                           "IATA Code": '',
-                                          "City": '',
-                                          "Province": '',
-                                          "Country": '',
-                                          "Continent": '',
                                           "Full Location": '',
-                                          "Website": '',
                                           "Latitude": '',
                                           "Longitude": '',
-                                          "Elevation": ''
                                           })
 
             for k in j['airports']:
+                print(k['url'])
                 soup = BeautifulSoup(requests.get(
                     k['url']).text, features="html.parser")
 
@@ -51,40 +47,10 @@ def scrap_page(url):
                 k['IATA Code'] = str(
                     data)[s+len("Airport (IATA) Code:</strong>"):e]
 
-                t_s = str(data).find("City:</strong>")
-                s = str(data).find("title=", t_s)
-                e = str(data).find("</a>", s+1)
-                k['City'] = str(
-                    data)[s+len("title= "):e]
-
-                t_s = str(data).find("Province:</strong>")
-                s = str(data).find("title=", t_s)
-                e = str(data).find("</a>", s+1)
-                k['Province'] = str(
-                    data)[s+len("title= "):e]
-
-                t_s = str(data).find("Country:</strong>")
-                s = str(data).find("title=", t_s)
-                e = str(data).find("</a>", s+1)
-                k['Country'] = str(
-                    data)[s+len("title= "):e]
-
-                s = str(data).find("Continent:</strong>")
-                e = str(data).find("</div>", s+1)
-                k['Continent'] = str(
-                    data)[s+len("Continent:</strong>"):e]
-
                 s = str(data).find("Full Location:</strong>")
                 e = str(data).find("</div>", s+1)
                 k['Full Location'] = str(
                     data)[s+len("Full Location:</strong>"):e]
-
-                t_s = str(data).find("Website:</strong>")
-                s = str(data).find("href=", t_s)
-                e = str(data).find(' " ', s+2)
-                k['Website'] = str(
-                    data)[s+len("href= "):e]
-
                 s = str(data).find("Latitude:</strong>")
                 e = str(data).find("</div>", s+1)
                 k['Latitude'] = str(
@@ -95,10 +61,10 @@ def scrap_page(url):
                 k['Longitude'] = str(
                     data)[s+len("Longitude:</strong>"):e]
 
-                s = str(data).find("Elevation:</strong>")
-                e = str(data).find("</div>", s+1)
-                k['Elevation'] = str(
-                    data)[s+len("Elevation:</strong>"):e]
+                # s = str(data).find("Elevation:</strong>")
+                # e = str(data).find("</div>", s+1)
+                # k['Elevation'] = str(
+                #     data)[s+len("Elevation:</strong>"):e]
 
     with open('airports.json', "w") as file:
         json.dump(countries, file)
